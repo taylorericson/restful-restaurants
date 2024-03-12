@@ -104,6 +104,23 @@ router.post("/", (req, res) => {
  * Feature 9: Deleting from your list of starred restaurants.
  */
 
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  const newListOfStarredRestaurants = STARRED_RESTAURANTS.filter(
+    (restaurant) => restaurant.id !== id
+  );
+
+  // The user tried to unstar a restaurant that isn't currently starred
+  if (STARRED_RESTAURANTS.length === newListOfStarredRestaurants.length) {
+    res.sendStatus(404);
+    return;
+  }
+
+  STARRED_RESTAURANTS = newListOfStarredRestaurants;
+
+  res.sendStatus(200);
+});
+
 /**
  * Feature 10: Updating your comment of a starred restaurant.
  */
